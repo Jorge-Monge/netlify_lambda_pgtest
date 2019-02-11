@@ -5,6 +5,10 @@ callback(null, {
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Headers': 'Origin, x-Requested-Width, Content-Type, Accept'
     },
-    body: '{"msg": "Hello World"}'
+    body: createReturn()
 });
+}
+
+function createReturn() {
+    return '{"msg": "Hello visitor from the outer space!"}'
 }
