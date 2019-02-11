@@ -1,0 +1,61 @@
+API key: 804601f8-759a-42ce-b863-e8c70c976585
+
+// Executed:
+CREATE TABLE json_ict442 (
+gid serial,
+poi_name text,
+poi_text text,
+uploader_id integer,
+uploader_firstname text,
+uploader_lastname text,
+date_uploaded date,
+poi_lat double precision,
+poi_lon double precision,
+CONSTRAINT json_ict442_pkey PRIMARY KEY (gid));
+
+In node, install the package manifesto:
+>>npm init -y
+And the 'netlify-lambda' package:
+>>npm i netlify-lambda
+In Node, let us install the ´pg´ package:
+>>npm i pg
+
+
+Then we edited the package.json by adding 2 entries to 'scripts'.
+Then we created 'netlify.toml', where we need to specify the name
+we want for the build folder.
+
+Then we populate the pg_connect.js file with the exports.handler.
+Now we can initiate the server with
+>>npm run lambda-serve
+
+That will create the lambda folder, and will start a localserver on port 9000
+
+Now in Postman, we can do a GET request to http://localhost:9000/pg_connect
+
+Then we can BUILD the lambda function:
+>>npm run lambda-build
+
+Now we need to create the file .gitignore
+
+
+var pg = 
+require('pg');
+//or native libpq bindings
+//var pg = require('pg').native
+
+var conString = "postgres://biflpkhu:hmkS-pad-WLwC-6weDRnFsFJweRkwk21@baasu.db.elephantsql.com:5432/biflpkhu" //Can be found in the Details page
+var client = new pg.Client(conString);
+client.connect(function(err) {
+  if(err) {
+    return console.error('could not connect to postgres', err);
+  }
+  client.query('SELECT NOW() AS "theTime"', function(err, result) {
+    if(err) {
+      return console.error('error running query', err);
+    }
+    console.log(result.rows[0].theTime);
+    // >> output: 2018-08-23T14:02:57.117Z
+    client.end();
+  });
+});
