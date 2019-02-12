@@ -19,6 +19,8 @@ And the 'netlify-lambda' package:
 >>npm i netlify-lambda
 In Node, let us install the ´pg´ package:
 >>npm i pg
+And apparently this below is needed as well:
+>>npm i pg-native
 
 
 Then we edited the package.json by adding 2 entries to 'scripts'.
